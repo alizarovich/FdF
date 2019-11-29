@@ -6,7 +6,7 @@
 #    By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/26 20:40:34 by kgavrilo          #+#    #+#              #
-#    Updated: 2019/11/26 21:02:37 by kgavrilo         ###   ########.fr        #
+#    Updated: 2019/11/29 20:10:08 by kgavrilo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,3 +42,5 @@ build:
 	gcc $(OBJ) -o $(NAME) -L libft -lft
 	rm -f $(OBJ)
 
+test:
+	gcc $(FLAGS) -I minilibx -L minilibx -lmlx -framework OpenGL -framework AppKit $(SRC)
