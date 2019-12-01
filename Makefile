@@ -6,7 +6,7 @@
 #    By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/26 20:40:34 by kgavrilo          #+#    #+#              #
-#    Updated: 2019/11/29 15:27:41 by kgavrilo         ###   ########.fr        #
+#    Updated: 2019/11/29 19:02:29 by kgavrilo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,5 +43,5 @@ re:	fclean all
 build:
 	rm -f $(NAME)
 	gcc -c $(SRC) $(FLAGS) -g
-	gcc $(OBJ) -o $(NAME) -L libft -lft -L minilibx -lmlx -framework OpenGL -framework AppKit
-	rm -f $(OBJ)
+	gcc $(OBJ) -o $(NAME) -L libft -lft -L minilibx -lmlx -framework OpenGL -framework AppKit -g
+	#rm -f $(OBJ)
