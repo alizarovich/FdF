@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 21:08:23 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/04 12:33:44 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/04 12:41:23 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,6 @@ int		main(int argc, char **argv)
 }
 */
 #include "minilibx/mlx.h"
-
-int ft_round(double number)
-{
-	return (number >= 0) ? (int)(number + 0.5) : (int)(number - 0.5);
-}
 
 int gradient(int startcolor, int endcolor, int len, int pix)
 {
