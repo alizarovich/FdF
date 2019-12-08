@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:22:19 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/08 13:46:24 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/08 14:12:37 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct	s_map
 	void		*win;
 	int			width;
 	int			height;
-	int			**z_values;
+	int			**z_data;
 }				t_map;
 
 int				ft_keyhook_pressed(int keycode, t_map *e);
