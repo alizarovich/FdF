@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:22:19 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/08 14:12:37 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/08 15:41:13 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef struct	s_map
 
 int				ft_keyhook_pressed(int keycode, t_map *e);
 int				ft_keyhook_release(int keycode, t_map *e);
-int				read_map_file(char *filename, t_map *current_map);
+int				init_mlx_window(t_map *map);
+int				read_map_file(char *filename, t_map *map);
+
 
 #endif

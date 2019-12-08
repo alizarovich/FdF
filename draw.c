@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 12:55:05 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/08 13:08:40 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/08 15:42:26 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,18 @@ void		draw_line(int x1, int y1, int x2, int y2, t_map *e)
 }
 
 /*
-** Init
+** Function to init minilibx window
 */
 
-int init(t_map *e)
+int			init_mlx_window(t_map *map)
 {
-	e->mlx = mlx_init();
-	if (!(e->win = mlx_new_window(e->mlx, 1000, 1000, "Title")))
+	map->mlx = mlx_init();
+	if (!(map->win = mlx_new_window(map->mlx, 1000, 1000, "Title")))
 		return (0);
-	mlx_string_put(e->mlx, e->win, 100, 92, 0xFFFFDF, "Hello");
-	draw_line(10, 10, 10, 100, e);
-	mlx_hook(e->win, 2, (1L << 0), ft_keyhook_pressed, e);
-	mlx_hook(e->win, 3, (1L << 1), ft_keyhook_release, e);
-	mlx_loop(e->mlx);
+	mlx_string_put(map->mlx, map->win, 100, 92, 0xFFFFDF, "Hello");
+	draw_line(10, 10, 100, 100, map);
+	mlx_hook(map->win, 2, (1L << 0), ft_keyhook_pressed, map);
+	mlx_hook(map->win, 3, (1L << 1), ft_keyhook_release, map);
+	mlx_loop(map->mlx);
 	return(0);
 }
