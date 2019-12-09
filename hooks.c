@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 12:53:48 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/08 22:07:30 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/09 07:21:55 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,20 @@ int		ft_keyhook_release(int keycode, t_map *e)
 	if (e)
 		printf("%d\n", keycode); // TODO DELETE THAT LINE!
 	return (0);
+}
+
+int		ft_mouse_hook(int keycode, int x, int y, t_map *map)
+{
+	// TODO rotate with mouse
+	if (map)
+		printf("%i\t%i\t%i\n", keycode, x, y);
+	/*
+	how mouse works
+	get current offset
+	get related coordinates
+	update offset
+	clear window
+	redraw map
+	*/
+return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:22:19 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/08 22:15:41 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/09 07:35:49 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct	s_map
 
 void			draw_map(t_map *map);
 int				ft_keyhook(int keycode, t_map *e);
+int				ft_mouse_hook(int keycode, int x, int y, t_map *map);
 int				ft_keyhook_pressed(int keycode, t_map *e);
 int				ft_keyhook_release(int keycode, t_map *e);
 int				init_mlx_window(t_map *map);

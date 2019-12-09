@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 12:55:05 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/08 22:00:38 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/09 07:37:00 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ int			init_mlx_window(t_map *map)
 	mlx_string_put(map->mlx, map->win, 100, 92, 0xFFFFDF, "Hello");
 	draw_map(map);
 	mlx_key_hook(map->win, ft_keyhook, map);
+	mlx_mouse_hook(map->win, ft_mouse_hook, map);
 	mlx_hook(map->win, 2, (1L << 0), ft_keyhook_pressed, map);
 	mlx_hook(map->win, 3, (1L << 1), ft_keyhook_release, map);
 	mlx_loop(map->mlx);
