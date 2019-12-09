@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 12:55:05 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/08 15:42:26 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/08 21:27:16 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,29 @@ void		draw_line(int x1, int y1, int x2, int y2, t_map *e)
 }
 
 /*
+** Function to draw map
+*/
+
+void		draw_map(t_map *map)
+{
+	int		x;
+	int		y;
+
+	y = 0;
+	while(y < map->height)
+	{
+		x = 0;
+		while (x < map->width)
+		{
+			draw_line(x, y, x + 1, y, map);
+			draw_line(x, y, x, y + 1, map);
+			x++;
+		}
+		y++;
+	}
+}
+
+/*
 ** Function to init minilibx window
 */
 
@@ -73,7 +96,7 @@ int			init_mlx_window(t_map *map)
 	if (!(map->win = mlx_new_window(map->mlx, 1000, 1000, "Title")))
 		return (0);
 	mlx_string_put(map->mlx, map->win, 100, 92, 0xFFFFDF, "Hello");
-	draw_line(10, 10, 100, 100, map);
+	draw_map(map);
 	mlx_hook(map->win, 2, (1L << 0), ft_keyhook_pressed, map);
 	mlx_hook(map->win, 3, (1L << 1), ft_keyhook_release, map);
 	mlx_loop(map->mlx);
