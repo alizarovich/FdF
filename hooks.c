@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 12:53:48 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/08 13:10:02 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/08 13:43:03 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 
 int		ft_keyhook_pressed(int keycode, t_map *e)
 {
-	keycode == 53 ? exit(0) : 0;
+	if (e)
+		keycode == 53 ? exit(0) : 0;
 	return (0);
 }
 
