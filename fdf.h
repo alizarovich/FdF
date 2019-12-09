@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:22:19 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/08 22:05:28 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/08 22:15:41 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 # include "minilibx/mlx.h"
 # include "libft/libft.h"
+# include <math.h>
+
 # include <stdio.h> // TODO DELETE THIS LINE!
 
 typedef struct	s_map
