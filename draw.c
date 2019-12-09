@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 12:55:05 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/08 21:27:16 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/08 22:00:38 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,43 @@ int gradient(int startcolor, int endcolor, int len, int pix)
 	return (newcolor);
 }
 
+void		isometric(float *x, float *y, int z)
+{
+	*x = (*x - *y) * cos(0.8);
+	*y = (*x + *y) * sin(0.8) - z;
+}
+
 /*
 ** Bresenham’s Line Generation
 */
 
-void		draw_line(int x1, int y1, int x2, int y2, t_map *e)
+void		draw_line(int x1, int y1, int x2, int y2, t_map *map)
 {
 	int		m;
 	int		slope_error;
 	int		x;
 	int		y;
+	int		z1;
+	int		z2;
+
+	z1 = map->z_data[y1][x1];
+	z2 = map->z_data[y2][x2];
+
+	// zoom
+	x1 *= map->zoom;
+	y1 *= map->zoom;
+	x2 *= map->zoom;
+	y2 *= map->zoom;
+
+	// 3D
+	isometric (&x1, &y1, z1);
+	isometric (&x2, &y2, z2);
+
+	//shift
+	x1 += map->shift_x;
+	y1 += map->shift_y;
+	x2 += map->shift_x;
+	y2 += map->shift_y;
 
 	m = 2 * (y2 - y1);
 	slope_error = m - (x2 - x1);
@@ -53,7 +80,7 @@ void		draw_line(int x1, int y1, int x2, int y2, t_map *e)
 	while (x <= x2)
 	{
 		slope_error += m;
-		mlx_pixel_put (e->mlx, e->win, x, y, gradient(0x0000FF, 0xFFFF00, 90, y2 - y));
+		mlx_pixel_put (map->mlx, map->win, x, y, gradient(0x0000FF, 0xFFFF00, 90, z2 - z1));
 		if (slope_error >= 0)
 		{
 			y++;
@@ -78,8 +105,10 @@ void		draw_map(t_map *map)
 		x = 0;
 		while (x < map->width)
 		{
-			draw_line(x, y, x + 1, y, map);
-			draw_line(x, y, x, y + 1, map);
+			if (x < map->width - 1)
+				draw_line(x, y, x + 1, y, map);
+			if (y < map->height - 1)
+				draw_line(x, y, x, y + 1, map);
 			x++;
 		}
 		y++;
@@ -95,8 +124,10 @@ int			init_mlx_window(t_map *map)
 	map->mlx = mlx_init();
 	if (!(map->win = mlx_new_window(map->mlx, 1000, 1000, "Title")))
 		return (0);
+	map->zoom = 20;
 	mlx_string_put(map->mlx, map->win, 100, 92, 0xFFFFDF, "Hello");
 	draw_map(map);
+	mlx_key_hook(map->win, ft_keyhook, map);
 	mlx_hook(map->win, 2, (1L << 0), ft_keyhook_pressed, map);
 	mlx_hook(map->win, 3, (1L << 1), ft_keyhook_release, map);
 	mlx_loop(map->mlx);
