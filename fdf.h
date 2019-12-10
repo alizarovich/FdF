@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:22:19 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/10 14:04:48 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/10 14:36:59 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 # include "minilibx/mlx.h"
 # include "libft/libft.h"
 # include <math.h>
-
-# include <stdio.h> // TODO DELETE THIS LINE!
 
 typedef struct	s_point
 {

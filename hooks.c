@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 12:53:48 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/10 14:16:17 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/10 14:36:52 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int		ft_keyhook(int keycode, t_map *e)
 		ft_keyhook_1(keycode, e);
 	else
 		ft_keyhook_2(keycode, e);
-	printf("%i\n", keycode); // TODO DELETE THIS LINE!
 	mlx_clear_window(e->mlx, e->win);
 	draw_map(e);
 	return (0);
