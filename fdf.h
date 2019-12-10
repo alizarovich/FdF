@@ -6,14 +6,12 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:22:19 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/09 07:35:49 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:10:19 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef FDF_H
 # define FDF_H
-
 # include "minilibx/mlx.h"
 # include "libft/libft.h"
 # include <math.h>
@@ -29,6 +27,7 @@ typedef struct	s_map
 	int			height;
 	int			shift_x;
 	int			shift_y;
+	int			rotation;
 	int			**z_data;
 }				t_map;
 
@@ -39,6 +38,5 @@ int				ft_keyhook_pressed(int keycode, t_map *e);
 int				ft_keyhook_release(int keycode, t_map *e);
 int				init_mlx_window(t_map *map);
 int				read_map_file(char *filename, t_map *map);
-
 
 #endif

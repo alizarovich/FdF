@@ -6,27 +6,11 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 13:08:51 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/08 15:31:11 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:11:16 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-// TODO Do I need join_lines func? If not - delete it!
-/*
-** Function to connect lines to each other
-** Return line
-*/
-
-char		*join_lines(char *line, char *prevlines)
-{
-	char		*temp;
-
-	temp = prevlines;
-	prevlines = ft_strjoin(temp, line);
-	ft_strdel(&temp);
-	return (prevlines);
-}
 
 /*
 ** Function to read and check map file
@@ -63,7 +47,7 @@ int				get_map_size(char *filename, t_map *map)
 ** Function to add map data
 */
 
-void				save_map_data(int *z_row, char *line)
+void			save_map_data(int *z_row, char *line)
 {
 	int			i;
 	char		**nums;

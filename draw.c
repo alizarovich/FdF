@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 12:55:05 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/09 07:37:00 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:14:52 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 ** Gradient generate
 */
 
-int gradient(int startcolor, int endcolor, int len, int pix)
+int			gradient(int startcolor, int endcolor, int len, int pix)
 {
-	double increment[3];
-	int new[3];
-	int newcolor;
+	double		increment[3];
+	int			new[3];
+	int			newcolor;
 
 	// for red, green, and blue accordingly
 	increment[0] = (double)((endcolor >> 16) - (startcolor >> 16)) / (double)len;
@@ -37,25 +37,37 @@ int gradient(int startcolor, int endcolor, int len, int pix)
 
 void		isometric(float *x, float *y, int z)
 {
-	*x = (*x - *y) * cos(0.8);
+	*x = (*x - *y) * cos(0.7);
 	*y = (*x + *y) * sin(0.8) - z;
+}
+
+void		rotation(float *x, float *y, t_map *map)
+{
+	*x = *x * cos(map->rotation) + *y * sin(map->rotation);
+	*y = -*x * sin(map->rotation) + *y * cos(map->rotation);
+}
+
+float		max_num(float a, float b)
+{
+	if (a > b)
+		return (a);
+	return (b);
 }
 
 /*
 ** Bresenham’s Line Generation
 */
 
-void		draw_line(int x1, int y1, int x2, int y2, t_map *map)
+void		draw_line(float x1, float y1, float x2, float y2, t_map *map)
 {
-	int		m;
-	int		slope_error;
-	int		x;
-	int		y;
-	int		z1;
-	int		z2;
+	int			z1;
+	int			z2;
+	float		x_step;
+	float		y_step;
+	float		max;
 
-	z1 = map->z_data[y1][x1];
-	z2 = map->z_data[y2][x2];
+	z1 = map->z_data[(int)y1][(int)x1];
+	z2 = map->z_data[(int)y2][(int)x2];
 
 	// zoom
 	x1 *= map->zoom;
@@ -64,8 +76,8 @@ void		draw_line(int x1, int y1, int x2, int y2, t_map *map)
 	y2 *= map->zoom;
 
 	// 3D
-	isometric (&x1, &y1, z1);
-	isometric (&x2, &y2, z2);
+	isometric(&x1, &y1, z1);
+	isometric(&x2, &y2, z2);
 
 	//shift
 	x1 += map->shift_x;
@@ -73,20 +85,20 @@ void		draw_line(int x1, int y1, int x2, int y2, t_map *map)
 	x2 += map->shift_x;
 	y2 += map->shift_y;
 
-	m = 2 * (y2 - y1);
-	slope_error = m - (x2 - x1);
-	x = x1;
-	y = y1;
-	while (x <= x2)
+	x_step = x2 - x1;
+	y_step = y2 - y1;
+
+	max = max_num(ft_abs(x_step), ft_abs(y_step));
+	x_step /= max;
+	y_step /= max;
+
+	//rotation
+	//rotation(&x1, &y1, map);
+	while (ft_abs(x2 - x1) > 0 || ft_abs(y2 - y1) > 0)
 	{
-		slope_error += m;
-		mlx_pixel_put (map->mlx, map->win, x, y, gradient(0x0000FF, 0xFFFF00, 90, z2 - z1));
-		if (slope_error >= 0)
-		{
-			y++;
-			slope_error -= 2 * (x2 - x1);
-		}
-		x++;
+		mlx_pixel_put(map->mlx, map->win, x1, y1, 0xFFFF00); //gradient(0x0000FF, 0xFFFF00, max, z1)); // max z, current z
+		x1 += x_step;
+		y1 += y_step;
 	}
 }
 
@@ -100,7 +112,7 @@ void		draw_map(t_map *map)
 	int		y;
 
 	y = 0;
-	while(y < map->height)
+	while (y < map->height)
 	{
 		x = 0;
 		while (x < map->width)
@@ -124,13 +136,16 @@ int			init_mlx_window(t_map *map)
 	map->mlx = mlx_init();
 	if (!(map->win = mlx_new_window(map->mlx, 1000, 1000, "Title")))
 		return (0);
-	map->zoom = 20;
+	map->zoom = 5;
+	map->shift_x = 100;
+	map->shift_y = 100;
+	map->rotation = 0;
 	mlx_string_put(map->mlx, map->win, 100, 92, 0xFFFFDF, "Hello");
 	draw_map(map);
 	mlx_key_hook(map->win, ft_keyhook, map);
-	mlx_mouse_hook(map->win, ft_mouse_hook, map);
-	mlx_hook(map->win, 2, (1L << 0), ft_keyhook_pressed, map);
-	mlx_hook(map->win, 3, (1L << 1), ft_keyhook_release, map);
+	//mlx_mouse_hook(map->win, ft_mouse_hook, map);
+	//mlx_hook(map->win, 2, (1L << 0), ft_keyhook_pressed, map);
+	//mlx_hook(map->win, 3, (1L << 1), ft_keyhook_release, map);
 	mlx_loop(map->mlx);
-	return(0);
+	return (0);
 }

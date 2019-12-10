@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 12:53:48 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/09 07:21:55 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:11:44 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,30 @@
 
 int		ft_keyhook(int keycode, t_map *e)
 {
-	if (keycode == 126)
+	if (keycode == 53)
+		exit(0);
+	else if (keycode == 126)
 		e->shift_y -= 10;
 	else if (keycode == 125)
 		e->shift_y += 10;
 	else if (keycode == 123)
 		e->shift_x -= 10;
-	else if (keycode == 122)
+	else if (keycode == 124)
 		e->shift_x += 10;
+	else if (keycode == 69)
+		e->zoom += 10;
+	else if (keycode == 78)
+		e->zoom -= 10;
+	else if (keycode == 269)
+		e->rotation += 1;
+	else if (keycode == 82)
+		e->rotation -= 1;
+	printf("%i\n", keycode); // TODO DELETE THIS LINE!
 	mlx_clear_window(e->mlx, e->win);
 	draw_map(e);
 	return (0);
 }
+
 /*
 ** Function to check if ESC is pressed
 */
