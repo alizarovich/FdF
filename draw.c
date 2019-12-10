@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 12:55:05 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/10 14:24:54 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/10 14:32:36 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		draw_line(t_map *map)
 	y = map->p1.y_cur;
 	x_step = map->p2.x_cur - x;
 	y_step = map->p2.y_cur - y;
-	max = max_num(ft_abs(x_step), ft_abs(y_step));
+	max = ft_maxnum(ft_abs(x_step), ft_abs(y_step));
 	x_step /= max;
 	y_step /= max;
 	while (ft_abs(map->p2.x_cur - x) > 0 || ft_abs(map->p2.y_cur - y) > 0)
