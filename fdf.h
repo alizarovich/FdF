@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:22:19 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/10 13:10:26 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/10 14:04:48 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ typedef struct	s_point
 	int			x;
 	int			y;
 	int			z;
-	int			x_cur;
-	int			y_cur;
+	float		x_cur;
+	float		y_cur;
 }				t_point;
 
 typedef struct	s_map
@@ -59,5 +59,6 @@ int				init_mlx_window(t_map *map);
 void			projection(float *x, float *y, int z, t_map *map);
 void			print_labels(t_map *map);
 int				read_map_file(char *filename, t_map *map);
+void			rotation(float *x, float *y, t_map *map);
 
 #endif

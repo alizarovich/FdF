@@ -6,13 +6,13 @@
 #    By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/26 20:40:34 by kgavrilo          #+#    #+#              #
-#    Updated: 2019/12/10 13:03:41 by kgavrilo         ###   ########.fr        #
+#    Updated: 2019/12/10 13:36:42 by kgavrilo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 FLAGS = -Wall -Wextra -Werror -I./
-SRC = main.c draw.c hooks.c map.c projection.c
+SRC = main.c draw.c hooks.c map.c projection.c win_init.c
 LIBFT = libft/
 MINILIBX = minilibx/
 

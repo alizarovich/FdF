@@ -6,18 +6,22 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 13:08:51 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/10 10:09:52 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/10 13:38:43 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void		find_extremum_z(t_map *map)
+/*
+** Function to find min and max z
+*/
+
+void			find_extremum_z(t_map *map)
 {
-	int		i;
-	int		j;
-	int		z_min;
-	int		z_max;
+	int			i;
+	int			j;
+	int			z_min;
+	int			z_max;
 
 	j = 0;
 	z_min = 2147483647;
@@ -25,7 +29,7 @@ void		find_extremum_z(t_map *map)
 	while (j < map->height)
 	{
 		i = 0;
-		while(i < map->width)
+		while (i < map->width)
 		{
 			if (map->z_data[j][i] > z_max)
 			{
@@ -39,8 +43,8 @@ void		find_extremum_z(t_map *map)
 	}
 	map->z_min = z_min;
 	map->z_max = z_max;
-
 }
+
 /*
 ** Function to read and check map file
 */

@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 12:55:05 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/10 13:19:29 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/10 14:24:54 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,136 +22,97 @@ int			gradient(int startcolor, int endcolor, int len, int pix)
 	int			new[3];
 	int			newcolor;
 
-	// for red, green, and blue accordingly
-	increment[0] = (double)((endcolor >> 16) - (startcolor >> 16)) / (double)len;
-	increment[1] = (double)(((endcolor >> 8) & 0xFF) - ((startcolor >> 8) & 0xFF)) / (double)len;
-	increment[2] = (double)((endcolor & 0xFF) - (startcolor & 0xFF)) / (double)len;
-
+	increment[0] = (double)((endcolor >> 16) -
+	(startcolor >> 16)) / (double)len;
+	increment[1] = (double)(((endcolor >> 8) & 0xFF) -
+	((startcolor >> 8) & 0xFF)) / (double)len;
+	increment[2] = (double)((endcolor & 0xFF) -
+	(startcolor & 0xFF)) / (double)len;
 	new[0] = (startcolor >> 16) + ft_round(pix * increment[0]);
 	new[1] = ((startcolor >> 8) & 0xFF) + ft_round(pix * increment[1]);
 	new[2] = (startcolor & 0xFF) + ft_round(pix * increment[2]);
-
 	newcolor = ((new[0]) << 16) + ((new[1]) << 8) + (new[2]);
 	return (newcolor);
-}
-
-void		rotation(float *x, float *y, t_map *map)
-{
-	*x = *x * cos(map->rotation) + *y * sin(map->rotation);
-	*y = -(*x) * sin(map->rotation) + *y * cos(map->rotation);
-}
-
-float		max_num(float a, float b)
-{
-	if (a > b)
-		return (a);
-	return (b);
 }
 
 /*
 ** Bresenham’s Line Generation
 */
 
-void		draw_line(float x1, float y1, float x2, float y2, t_map *map)
+void		draw_line(t_map *map)
 {
 	float		x_step;
 	float		y_step;
+	float		x;
+	float		y;
 	float		max;
 
-	x_step = x2 - x1;
-	y_step = y2 - y1;
+	x = map->p1.x_cur;
+	y = map->p1.y_cur;
+	x_step = map->p2.x_cur - x;
+	y_step = map->p2.y_cur - y;
 	max = max_num(ft_abs(x_step), ft_abs(y_step));
 	x_step /= max;
 	y_step /= max;
-
-	while (ft_abs(x2 - x1) > 0 || ft_abs(y2 - y1) > 0)
+	while (ft_abs(map->p2.x_cur - x) > 0 || ft_abs(map->p2.y_cur - y) > 0)
 	{
-		mlx_pixel_put(map->mlx, map->win, x1, y1, 0xFFFF00); //gradient(0x0000FF, 0xFFFF00, map->z_max - , z1)); // max z, current z
-		x1 += x_step;
-		y1 += y_step;
+		mlx_pixel_put(map->mlx, map->win, x, y, 0xFFFF00);
+		//gradient(0x0000FF, 0xFFFF00, map->z_max - , z1)); // max z, current z
+		x += x_step;
+		y += y_step;
 	}
 }
 
-void		process_points(float x1, float y1, float x2, float y2, t_map *map)
+/*
+** Function to change params for each point - zoom, projection, rotation
+*/
+
+void		process_points(t_map *map)
 {
-	int			z1;
-	int			z2;
-
-	z1 = map->z_data[(int)y1][(int)x1];
-	z2 = map->z_data[(int)y2][(int)x2];
-
-	// zoom
-	x1 *= map->zoom;
-	y1 *= map->zoom;
-	x2 *= map->zoom;
-	y2 *= map->zoom;
-
-	// 3D
-	projection(&x1, &y1, z1, map);
-	projection(&x2, &y2, z2, map);
-
-	//shift
-	x1 += map->shift_x;
-	y1 += map->shift_y;
-	x2 += map->shift_x;
-	y2 += map->shift_y;
-
-	//rotation
-	rotation(&x1, &y1, map);
-	rotation(&x2, &y2, map);
-	draw_line(x1, y1, x2, y2, map);
-
+	map->p1.z = map->z_data[(int)(map->p1.y)][(int)(map->p1.x)];
+	map->p2.z = map->z_data[(int)(map->p2.y)][(int)(map->p2.x)];
+	map->p1.x_cur = map->p1.x * map->zoom;
+	map->p1.y_cur = map->p1.y * map->zoom;
+	map->p2.x_cur = map->p2.x * map->zoom;
+	map->p2.y_cur = map->p2.y * map->zoom;
+	projection(&(map->p1.x_cur), &(map->p1.y_cur), map->p1.z, map);
+	projection(&(map->p2.x_cur), &(map->p2.y_cur), map->p2.z, map);
+	map->p1.x_cur += map->shift_x;
+	map->p1.y_cur += map->shift_y;
+	map->p2.x_cur += map->shift_x;
+	map->p2.y_cur += map->shift_y;
+	rotation(&(map->p1.x_cur), &(map->p1.y_cur), map);
+	rotation(&(map->p2.x_cur), &(map->p2.y_cur), map);
+	draw_line(map);
 }
+
 /*
 ** Function to draw map
 */
 
 void		draw_map(t_map *map)
 {
-	int		x;
-	int		y;
-
-	y = 0;
-	while (y < map->height)
+	map->p1.y = 0;
+	while (map->p1.y < map->height)
 	{
-		x = 0;
-		while (x < map->width)
+		map->p1.x = 0;
+		while (map->p1.x < map->width)
 		{
-			if (x < map->width - 1)
-				process_points(x, y, x + 1, y, map);
-			if (y < map->height - 1)
-				process_points(x, y, x, y + 1, map);
-			x++;
+			if (map->p1.x < map->width - 1)
+			{
+				map->p2.x = map->p1.x + 1;
+				map->p2.y = map->p1.y;
+				process_points(map);
+			}
+			if (map->p1.y < map->height - 1)
+			{
+				map->p2.x = map->p1.x;
+				map->p2.y = map->p1.y + 1;
+				process_points(map);
+			}
+			map->p1.x += 1;
 		}
-		y++;
+		map->p1.y += 1;
 	}
 	print_labels(map);
-}
-
-/*
-** Function to init minilibx window
-*/
-
-int			init_mlx_window(t_map *map)
-{
-	map->show_help = 0;
-	map->z_coeff = 5;
-	map->angle = 0.8;
-	map->rotation = 0;
-	map->projection = 0;
-	map->zoom = 50;
-	map->win_w = 1500;
-	map->win_h = 1000;
-	map->shift_x = map->win_w / 4;
-	map->shift_y = map->win_h / 3;
-	map->mlx = mlx_init();
-	if (!(map->win = mlx_new_window(map->mlx, map->win_w, map->win_h, "FdF")))
-		return (0);
-	draw_map(map);
-	mlx_key_hook(map->win, ft_keyhook, map);
-	//mlx_mouse_hook(map->win, ft_mouse_hook, map);
-	//mlx_hook(map->win, 2, (1L << 0), ft_keyhook_pressed, map);
-	//mlx_hook(map->win, 3, (1L << 1), ft_keyhook_release, map);
-	mlx_loop(map->mlx);
-	return (0);
 }
