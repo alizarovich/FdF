@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 12:55:05 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/09 18:27:21 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/10 13:19:29 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,10 @@ int			gradient(int startcolor, int endcolor, int len, int pix)
 	return (newcolor);
 }
 
-void		isometric(float *x, float *y, int z, t_map *map)
-{
-	*x = (*x - *y) * cos(map->angle);
-	*y = (*x + *y) * sin(map->angle) - z * map->z_coeff;
-}
-
 void		rotation(float *x, float *y, t_map *map)
 {
 	*x = *x * cos(map->rotation) + *y * sin(map->rotation);
-	*y = -*x * sin(map->rotation) + *y * cos(map->rotation);
+	*y = -(*x) * sin(map->rotation) + *y * cos(map->rotation);
 }
 
 float		max_num(float a, float b)
@@ -72,7 +66,7 @@ void		draw_line(float x1, float y1, float x2, float y2, t_map *map)
 
 	while (ft_abs(x2 - x1) > 0 || ft_abs(y2 - y1) > 0)
 	{
-		mlx_pixel_put(map->mlx, map->win, x1, y1, 0xFFFF00); //gradient(0x0000FF, 0xFFFF00, max, z1)); // max z, current z
+		mlx_pixel_put(map->mlx, map->win, x1, y1, 0xFFFF00); //gradient(0x0000FF, 0xFFFF00, map->z_max - , z1)); // max z, current z
 		x1 += x_step;
 		y1 += y_step;
 	}
@@ -93,8 +87,8 @@ void		process_points(float x1, float y1, float x2, float y2, t_map *map)
 	y2 *= map->zoom;
 
 	// 3D
-	isometric(&x1, &y1, z1, map);
-	isometric(&x2, &y2, z2, map);
+	projection(&x1, &y1, z1, map);
+	projection(&x2, &y2, z2, map);
 
 	//shift
 	x1 += map->shift_x;
@@ -103,7 +97,8 @@ void		process_points(float x1, float y1, float x2, float y2, t_map *map)
 	y2 += map->shift_y;
 
 	//rotation
-	//rotation(&x1, &y1, map);
+	rotation(&x1, &y1, map);
+	rotation(&x2, &y2, map);
 	draw_line(x1, y1, x2, y2, map);
 
 }
@@ -130,6 +125,7 @@ void		draw_map(t_map *map)
 		}
 		y++;
 	}
+	print_labels(map);
 }
 
 /*
@@ -138,16 +134,19 @@ void		draw_map(t_map *map)
 
 int			init_mlx_window(t_map *map)
 {
-	map->mlx = mlx_init();
-	if (!(map->win = mlx_new_window(map->mlx, 1000, 1000, "Title")))
-		return (0);
-	map->zoom = 50;
+	map->show_help = 0;
 	map->z_coeff = 5;
 	map->angle = 0.8;
-	map->shift_x = 100;
-	map->shift_y = 100;
 	map->rotation = 0;
-	mlx_string_put(map->mlx, map->win, 100, 92, 0xFFFFDF, "Hello");
+	map->projection = 0;
+	map->zoom = 50;
+	map->win_w = 1500;
+	map->win_h = 1000;
+	map->shift_x = map->win_w / 4;
+	map->shift_y = map->win_h / 3;
+	map->mlx = mlx_init();
+	if (!(map->win = mlx_new_window(map->mlx, map->win_w, map->win_h, "FdF")))
+		return (0);
 	draw_map(map);
 	mlx_key_hook(map->win, ft_keyhook, map);
 	//mlx_mouse_hook(map->win, ft_mouse_hook, map);
