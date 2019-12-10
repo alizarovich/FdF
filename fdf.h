@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:22:19 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/09 16:10:19 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/09 18:24:12 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct	s_map
 	int			height;
 	int			shift_x;
 	int			shift_y;
+	float		angle;
+	float		z_coeff;
 	int			rotation;
 	int			**z_data;
 }				t_map;

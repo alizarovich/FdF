@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 12:53:48 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/09 16:11:44 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/09 18:24:43 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ int		ft_keyhook(int keycode, t_map *e)
 		e->zoom += 10;
 	else if (keycode == 78)
 		e->zoom -= 10;
+	else if (keycode == 86)
+		e->z_coeff += 1;
+	else if (keycode == 83)
+		e->z_coeff -= 1;
 	else if (keycode == 269)
 		e->rotation += 1;
 	else if (keycode == 82)

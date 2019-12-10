@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 12:55:05 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/09 16:14:52 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/09 18:27:21 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ int			gradient(int startcolor, int endcolor, int len, int pix)
 	return (newcolor);
 }
 
-void		isometric(float *x, float *y, int z)
+void		isometric(float *x, float *y, int z, t_map *map)
 {
-	*x = (*x - *y) * cos(0.7);
-	*y = (*x + *y) * sin(0.8) - z;
+	*x = (*x - *y) * cos(map->angle);
+	*y = (*x + *y) * sin(map->angle) - z * map->z_coeff;
 }
 
 void		rotation(float *x, float *y, t_map *map)
@@ -60,11 +60,28 @@ float		max_num(float a, float b)
 
 void		draw_line(float x1, float y1, float x2, float y2, t_map *map)
 {
-	int			z1;
-	int			z2;
 	float		x_step;
 	float		y_step;
 	float		max;
+
+	x_step = x2 - x1;
+	y_step = y2 - y1;
+	max = max_num(ft_abs(x_step), ft_abs(y_step));
+	x_step /= max;
+	y_step /= max;
+
+	while (ft_abs(x2 - x1) > 0 || ft_abs(y2 - y1) > 0)
+	{
+		mlx_pixel_put(map->mlx, map->win, x1, y1, 0xFFFF00); //gradient(0x0000FF, 0xFFFF00, max, z1)); // max z, current z
+		x1 += x_step;
+		y1 += y_step;
+	}
+}
+
+void		process_points(float x1, float y1, float x2, float y2, t_map *map)
+{
+	int			z1;
+	int			z2;
 
 	z1 = map->z_data[(int)y1][(int)x1];
 	z2 = map->z_data[(int)y2][(int)x2];
@@ -76,8 +93,8 @@ void		draw_line(float x1, float y1, float x2, float y2, t_map *map)
 	y2 *= map->zoom;
 
 	// 3D
-	isometric(&x1, &y1, z1);
-	isometric(&x2, &y2, z2);
+	isometric(&x1, &y1, z1, map);
+	isometric(&x2, &y2, z2, map);
 
 	//shift
 	x1 += map->shift_x;
@@ -85,23 +102,11 @@ void		draw_line(float x1, float y1, float x2, float y2, t_map *map)
 	x2 += map->shift_x;
 	y2 += map->shift_y;
 
-	x_step = x2 - x1;
-	y_step = y2 - y1;
-
-	max = max_num(ft_abs(x_step), ft_abs(y_step));
-	x_step /= max;
-	y_step /= max;
-
 	//rotation
 	//rotation(&x1, &y1, map);
-	while (ft_abs(x2 - x1) > 0 || ft_abs(y2 - y1) > 0)
-	{
-		mlx_pixel_put(map->mlx, map->win, x1, y1, 0xFFFF00); //gradient(0x0000FF, 0xFFFF00, max, z1)); // max z, current z
-		x1 += x_step;
-		y1 += y_step;
-	}
-}
+	draw_line(x1, y1, x2, y2, map);
 
+}
 /*
 ** Function to draw map
 */
@@ -118,9 +123,9 @@ void		draw_map(t_map *map)
 		while (x < map->width)
 		{
 			if (x < map->width - 1)
-				draw_line(x, y, x + 1, y, map);
+				process_points(x, y, x + 1, y, map);
 			if (y < map->height - 1)
-				draw_line(x, y, x, y + 1, map);
+				process_points(x, y, x, y + 1, map);
 			x++;
 		}
 		y++;
@@ -136,7 +141,9 @@ int			init_mlx_window(t_map *map)
 	map->mlx = mlx_init();
 	if (!(map->win = mlx_new_window(map->mlx, 1000, 1000, "Title")))
 		return (0);
-	map->zoom = 5;
+	map->zoom = 50;
+	map->z_coeff = 5;
+	map->angle = 0.8;
 	map->shift_x = 100;
 	map->shift_y = 100;
 	map->rotation = 0;
