@@ -6,12 +6,41 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 13:08:51 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/09 20:09:12 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/10 10:09:52 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+void		find_extremum_z(t_map *map)
+{
+	int		i;
+	int		j;
+	int		z_min;
+	int		z_max;
+
+	j = 0;
+	z_min = 2147483647;
+	z_max = -2147483648;
+	while (j < map->height)
+	{
+		i = 0;
+		while(i < map->width)
+		{
+			if (map->z_data[j][i] > z_max)
+			{
+				z_max = map->z_data[j][i];
+			}
+			if (map->z_data[j][i] < z_min)
+				z_min = map->z_data[j][i];
+			i++;
+		}
+		j++;
+	}
+	map->z_min = z_min;
+	map->z_max = z_max;
+
+}
 /*
 ** Function to read and check map file
 */
@@ -106,5 +135,6 @@ int				read_map_file(char *filename, t_map *map)
 {
 	get_map_size(filename, map);
 	get_map_data(filename, map);
+	find_extremum_z(map);
 	return (1);
 }
