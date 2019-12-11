@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 12:53:48 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/10 20:01:31 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/11 14:00:56 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ void	ft_keyhook_2(int keycode, t_map *e)
 	else if (keycode == 35 && e->projection == 0)
 		e->projection = 1;
 	else if (keycode == 125)
-		e->shift_y += 10;
+		e->shift_y += 10 + e->zoom;
 	else if (keycode == 126)
-		e->shift_y -= 10;
+		e->shift_y -= 10 + e->zoom;
 	else if (keycode == 123)
-		e->shift_x -= 10;
+		e->shift_x -= 10 + e->zoom;
 	else if (keycode == 124)
-		e->shift_x += 10;
+		e->shift_x += 10 + e->zoom;
 	else if (keycode == 69 || keycode == 24)
 		e->zoom *= 1.5;
 	else if (keycode == 78 || keycode == 27)
