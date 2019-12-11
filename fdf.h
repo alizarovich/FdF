@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:22:19 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/10 14:36:59 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/10 15:23:05 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct	s_map
 	int			z_max;
 	int			show_help;
 	int			projection;
+	int			color_start;
+	int			color_end;
 	t_point		p1;
 	t_point		p2;
 }				t_map;

@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 12:55:05 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/10 14:32:36 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/10 17:29:58 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,31 @@
 
 /*
 ** Gradient generate
+** pix - interpolation of z
 */
 
-int			gradient(int startcolor, int endcolor, int len, int pix)
+int			gradient(t_map *map, float x, float y)
 {
 	double		increment[3];
 	int			new[3];
 	int			newcolor;
+	int			range;
+	float		pix;
 
-	increment[0] = (double)((endcolor >> 16) -
-	(startcolor >> 16)) / (double)len;
-	increment[1] = (double)(((endcolor >> 8) & 0xFF) -
-	((startcolor >> 8) & 0xFF)) / (double)len;
-	increment[2] = (double)((endcolor & 0xFF) -
-	(startcolor & 0xFF)) / (double)len;
-	new[0] = (startcolor >> 16) + ft_round(pix * increment[0]);
-	new[1] = ((startcolor >> 8) & 0xFF) + ft_round(pix * increment[1]);
-	new[2] = (startcolor & 0xFF) + ft_round(pix * increment[2]);
+	range = ft_abs((map->z_max - map->z_min));
+	pix = map->p1.z + (map->p2.z - map->p1.z)
+	* (sqrt(powf(x - map->p1.x_cur, 2) + powf(y - map->p1.y_cur, 2)))
+	/ (sqrt(powf(map->p2.x_cur - map->p1.x_cur, 2)
+	+ powf(map->p2.y_cur - map->p1.y_cur, 2)));
+	increment[0] = (double)((map->color_end >> 16) -
+	(map->color_start >> 16)) / (double)range;
+	increment[1] = (double)(((map->color_end >> 8) & 0xFF) -
+	((map->color_start >> 8) & 0xFF)) / (double)range;
+	increment[2] = (double)((map->color_end & 0xFF) -
+	(map->color_start & 0xFF)) / (double)range;
+	new[0] = (map->color_start >> 16) + ft_round(pix * increment[0]);
+	new[1] = ((map->color_start >> 8) & 0xFF) + ft_round(pix * increment[1]);
+	new[2] = (map->color_start & 0xFF) + ft_round(pix * increment[2]);
 	newcolor = ((new[0]) << 16) + ((new[1]) << 8) + (new[2]);
 	return (newcolor);
 }
@@ -56,8 +64,7 @@ void		draw_line(t_map *map)
 	y_step /= max;
 	while (ft_abs(map->p2.x_cur - x) > 0 || ft_abs(map->p2.y_cur - y) > 0)
 	{
-		mlx_pixel_put(map->mlx, map->win, x, y, 0xFFFF00);
-		//gradient(0x0000FF, 0xFFFF00, map->z_max - , z1)); // max z, current z
+		mlx_pixel_put(map->mlx, map->win, x, y, gradient(map, x, y));
 		x += x_step;
 		y += y_step;
 	}

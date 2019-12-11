@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:32:22 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/10 13:36:14 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/10 15:30:36 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void			print_labels(t_map *map)
 
 static void		map_init(t_map *map)
 {
+	map->color_start = 0x0000FF;
+	map->color_end = 0xFF0000;
 	map->show_help = 0;
 	map->z_coeff = 5;
 	map->angle = 0.8;
