@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 13:08:51 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/10 19:58:13 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/11 12:52:52 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int				get_map_size(char *filename, t_map *map)
 		if (!width)
 			width = ft_count_words(line, ' ');
 		if (width != ft_count_words(line, ' '))
-			return(0);
+			return (0);
 		height++;
 		ft_strdel(&line);
 	}
@@ -114,7 +114,7 @@ int				get_map_data(char *filename, t_map *map)
 	i = 0;
 	while (i <= map->height)
 		if (!(map->z_data[i++] = (int*)malloc(sizeof(int)
-		* (map->height + 1))))
+		* (map->width + 1))))
 			return (0);
 	fd = open(filename, O_RDONLY);
 	if (fd < 2)

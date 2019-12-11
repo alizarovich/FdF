@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:32:22 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/10 19:42:59 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/11 12:53:23 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void			print_labels(t_map *map)
 
 void			set_color(int color_num, char *color, t_map *map)
 {
-	int 		set_color;
+	int			set_color;
 
 	if (ft_strequ(color, "red"))
 		set_color = 0xFF0000;
@@ -72,7 +72,7 @@ void			set_color(int color_num, char *color, t_map *map)
 ** Function to init map with params
 */
 
-void		map_init(t_map *map)
+void			map_init(t_map *map)
 {
 	map->show_help = 0;
 	map->z_coeff = 5;
