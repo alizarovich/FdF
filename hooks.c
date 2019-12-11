@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 12:53:48 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/10 14:36:52 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/10 20:01:31 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	ft_keyhook_2(int keycode, t_map *e)
 	else if (keycode == 124)
 		e->shift_x += 10;
 	else if (keycode == 69 || keycode == 24)
-		e->zoom += 10;
+		e->zoom *= 1.5;
 	else if (keycode == 78 || keycode == 27)
-		e->zoom -= 10;
+		e->zoom /= 1.5;
 }
 
 int		ft_keyhook(int keycode, t_map *e)
