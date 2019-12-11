@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:32:22 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/10 15:30:36 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:42:59 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ void			print_labels(t_map *map)
 		0xFFFFDF, "'S' 'X'     rotate");
 		mlx_string_put(map->mlx, map->win, 10, 90,
 		0xFFFFDF, "'P'         change projection");
+		mlx_string_put(map->mlx, map->win, 10, 110,
+		0xFFFFDF, "'F'         pay respects");
+		mlx_string_put(map->mlx, map->win, 10, 130,
+		0xFFFFDF, "'esc'       exit");
 	}
 	else
 		mlx_string_put(map->mlx, map->win, 10, 10,
@@ -37,13 +41,39 @@ void			print_labels(t_map *map)
 }
 
 /*
+** Function to set color
+*/
+
+void			set_color(int color_num, char *color, t_map *map)
+{
+	int 		set_color;
+
+	if (ft_strequ(color, "red"))
+		set_color = 0xFF0000;
+	else if (ft_strequ(color, "orange"))
+		set_color = 0xFFa500;
+	else if (ft_strequ(color, "yellow"))
+		set_color = 0xFFFF00;
+	else if (ft_strequ(color, "green"))
+		set_color = 0x00FF00;
+	else if (ft_strequ(color, "blue"))
+		set_color = 0x0000FF;
+	else if (ft_strequ(color, "violet"))
+		set_color = 0x7F00FF;
+	else
+		set_color = 0xFFFFFF;
+	if (color_num == 2)
+		map->color_end = set_color;
+	else
+		map->color_start = set_color;
+}
+
+/*
 ** Function to init map with params
 */
 
-static void		map_init(t_map *map)
+void		map_init(t_map *map)
 {
-	map->color_start = 0x0000FF;
-	map->color_end = 0xFF0000;
 	map->show_help = 0;
 	map->z_coeff = 5;
 	map->angle = 0.8;
