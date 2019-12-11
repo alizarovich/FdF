@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 12:55:05 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/10 17:29:58 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/10 17:55:32 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int			gradient(t_map *map, float x, float y)
 	float		pix;
 
 	range = ft_abs((map->z_max - map->z_min));
-	pix = map->p1.z + (map->p2.z - map->p1.z)
+	pix = ft_abs(map->z_min) + map->p1.z + (map->p2.z - map->p1.z)
 	* (sqrt(powf(x - map->p1.x_cur, 2) + powf(y - map->p1.y_cur, 2)))
 	/ (sqrt(powf(map->p2.x_cur - map->p1.x_cur, 2)
 	+ powf(map->p2.y_cur - map->p1.y_cur, 2)));
