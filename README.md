@@ -7,7 +7,7 @@ git clone --recurse-submodules git@github.com:gavrilov/FdF.git
 cd FdF
 make
 ```
-If you would like to run in a Linux enviroment try to use that library
+If you would like to run in a Linux enviroment try this library
 `https://github.com/ttshivhula/minilibx`
 
 Input is a text file like this:
