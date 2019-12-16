@@ -6,16 +6,18 @@
 #    By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/26 20:40:34 by kgavrilo          #+#    #+#              #
-#    Updated: 2019/12/11 20:35:35 by kgavrilo         ###   ########.fr        #
+#    Updated: 2019/12/15 22:19:59 by kgavrilo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
-FLAGS = -Wall -Wextra -Werror -I./
-SRC = main.c draw.c hooks.c map.c projection.c win_init.c
+FLAGS = -Wall -Wextra -Werror -Iincludes
+SRC_DIR = src/
+FILES = main draw hooks map projection win_init
 LIBFT = libft/
 MINILIBX = minilibx/
 
+SRC = $(patsubst %, $(SRC_DIR)%, $(addsuffix .c, $(FILES)))
 OBJ = $(SRC:.c=.o)
 
 .PHONY: all clean fclean re build leaks
@@ -42,12 +44,10 @@ fclean: clean
 
 re:	fclean all
 
-build:
+build: $(OBJ)
 	rm -f $(NAME)
 	rm -rf fdf.sSYM
-	gcc -c $(SRC) $(FLAGS) -g
 	gcc $(OBJ) -o $(NAME) -L libft -lft -L minilibx -lmlx -framework OpenGL -framework AppKit -g
-	#rm -f $(OBJ)
 
 leaks: build
 	rm -f valgrind-out.txt

@@ -6,14 +6,14 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:22:19 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/10 20:01:43 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/15 21:59:24 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-# include "minilibx/mlx.h"
-# include "libft/libft.h"
+# include "../minilibx/mlx.h"
+# include "../libft/libft.h"
 # include <math.h>
 
 typedef struct	s_point
