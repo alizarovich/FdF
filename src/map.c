@@ -6,7 +6,7 @@
 /*   By: kgavrilo <kgavrilo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 13:08:51 by kgavrilo          #+#    #+#             */
-/*   Updated: 2019/12/11 12:52:52 by kgavrilo         ###   ########.fr       */
+/*   Updated: 2019/12/17 15:51:40 by kgavrilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int				get_map_size(char *filename, t_map *map)
 		height++;
 		ft_strdel(&line);
 	}
+	ft_strdel(&line);
 	map->height = height;
 	map->width = width;
 	close(fd);
@@ -125,6 +126,7 @@ int				get_map_data(char *filename, t_map *map)
 		save_map_data(map->z_data[i++], line);
 		ft_strdel(&line);
 	}
+	ft_strdel(&line);
 	close(fd);
 	return (1);
 }
